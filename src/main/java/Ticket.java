@@ -10,9 +10,10 @@ public class Ticket {
     String departureDate;
     String originAirport;
     String destinationAirport;
+    int flightMiles;
     ///
     String ETA;
-    int price;
+    double price;
     int boardingPassNo;
 
 
@@ -21,7 +22,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String passengerName, int passengerAge, String passengerEmail, String passengerGender, String passengerPhoneNo, String departureDate, String originAirport, String destinationAirport) {
+    public Ticket(String passengerName, int passengerAge, String passengerEmail, String passengerGender, String passengerPhoneNo, String departureDate, String originAirport, String destinationAirport, int flightMiles) {
         this.passengerName = passengerName;
         this.passengerAge = passengerAge;
         this.passengerEmail = passengerEmail;
@@ -30,9 +31,10 @@ public class Ticket {
         this.departureDate = departureDate;
         this.originAirport = originAirport;
         this.destinationAirport = destinationAirport;
+        this.flightMiles = flightMiles;
     }
 
-    public Ticket(String passengerName, int passengerAge, String passengerEmail, String passengerGender, String passengerPhoneNo, String departureDate, String originAirport, String destinationAirport, String ETA, int price, int boardingPassNo) {
+    public Ticket(String passengerName, int passengerAge, String passengerEmail, String passengerGender, String passengerPhoneNo, String departureDate, String originAirport, String destinationAirport, int flightMiles, String ETA, double price, int boardingPassNo) {
         this.passengerName = passengerName;
         this.passengerAge = passengerAge;
         this.passengerEmail = passengerEmail;
@@ -41,12 +43,14 @@ public class Ticket {
         this.departureDate = departureDate;
         this.originAirport = originAirport;
         this.destinationAirport = destinationAirport;
+        this.flightMiles = flightMiles;
         this.ETA = ETA;
         this.price = price;
         this.boardingPassNo = boardingPassNo;
     }
 
     // Getters and Setters
+
     public String getPassengerName() {
         return passengerName;
     }
@@ -111,6 +115,14 @@ public class Ticket {
         this.destinationAirport = destinationAirport;
     }
 
+    public int getFlightMiles() {
+        return flightMiles;
+    }
+
+    public void setFlightMiles(int flightMiles) {
+        this.flightMiles = flightMiles;
+    }
+
     public String getETA() {
         return ETA;
     }
@@ -119,11 +131,11 @@ public class Ticket {
         this.ETA = ETA;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -147,6 +159,7 @@ public class Ticket {
                 ", departureDate='" + departureDate + '\'' +
                 ", originAirport='" + originAirport + '\'' +
                 ", destinationAirport='" + destinationAirport + '\'' +
+                ", flightMiles=" + flightMiles +
                 ", ETA='" + ETA + '\'' +
                 ", price=" + price +
                 ", boardingPassNo=" + boardingPassNo +
@@ -156,14 +169,14 @@ public class Ticket {
     //Methods
     public void addTicket() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Passenger Name: ");
+        System.out.print("Passenger Name & Lastname: ");
         this.setPassengerName(scanner.nextLine());
         System.out.print("Passanger Age: ");
         this.setPassengerAge(scanner.nextInt());
         scanner.nextLine();
         System.out.print("Passanger Email: ");
         this.setPassengerEmail(scanner.nextLine());
-        System.out.print("Passenger Gender: ");
+        System.out.print("Passenger Gender (male/female): ");
         this.setPassengerGender(scanner.nextLine());
         System.out.print("Phone No: ");
         this.setPassengerPhoneNo(scanner.nextLine());
@@ -173,8 +186,32 @@ public class Ticket {
         this.setOriginAirport(scanner.nextLine());
         System.out.print("Destination Airport: ");
         this.setOriginAirport(scanner.nextLine());
+        System.out.print("Flight Miles: ");
+        this.setFlightMiles(scanner.nextInt());
+        scanner.nextLine();
 
         //this.shift = scanner.nextLine();
+    }
+
+    public void calculateETA() {
+
+    }
+
+    public void calculatePrice() {
+        this.price = this.flightMiles*.1;
+        if (this.getPassengerAge() <= 12){
+            this.setPrice((int) (this.getPrice()*.50));
+        } else if (this.getPassengerAge() >= 60){
+            this.setPrice((int) (this.getPrice()*.40));
+        } else if (this.getPassengerAge() > 12 && this.getPassengerAge()<60 && this.getPassengerGender().equals("female")){
+            this.setPrice((int) (this.getPrice()*.75));
+        }
+
+
+    }
+
+    public void calculateBoardingPassNo() {
+
     }
 
 

@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static List<Ticket> TicketArray = new ArrayList<Ticket>();
-    private static Ticket ticket1 = new Ticket("John Doe", 33, "abc@gmail.com","male","123-123-1234", "01/01/2022","IAD", "FRN");
+    private static Ticket ticket1 = new Ticket("John Doe", 33, "abc@gmail.com","male","123-123-1234", "01/01/2022","IAD", "FRN", 1000);
     private static Ticket tempTicket = new Ticket();
 
     public static void main(String[] args) throws ParseException {
@@ -50,15 +50,15 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("You selected to Display Tickets Info...");
-//                    for (Ticket tickt: TicketArray) {
-//                        System.out.println("Index: " + TicketArray.indexOf(waiter));
-//                        System.out.println("Name: " + ticket.getFirstName());
-//                        System.out.println("Last Name: " + waiter.getLastName());
+//                    for (Ticket ticket: TicketArray) {
+//                        System.out.println("Index: " + TicketArray.indexOf(ticket));
+//                        System.out.println("Passanger Name: " + ticket.getPassengerName());
+//                        System.out.println("Age: " + ticket.getPassengerAge());
 //                        System.out.println("Phone No: " + waiter.getPhoneNo());
 //                        System.out.println("Employee ID: " + waiter.getEmployeeID());
 //                        System.out.println("Shift: " + waiter.getShift());
 //                        System.out.println();
-            //          }
+//                      }
 
                     break;
                 case 4:
@@ -84,14 +84,19 @@ public class Main {
 
         public static void createTicket() {
         //add test ticket1
-        TicketArray.add(ticket1);
-        System.out.println(ticket1);
+//        TicketArray.add(ticket1);
+//        System.out.println(ticket1);
 
-        //add temp Ticket
+        //add tempTicket
         tempTicket.addTicket();
         TicketArray.add(tempTicket);
 
         System.out.println(TicketArray);
+
+        tempTicket.calculatePrice();
+        System.out.println("Ticket calculated price: " + tempTicket.getPrice());
+        System.out.println(TicketArray);
+        //tempTicket.setPrice();
 
         }
 
