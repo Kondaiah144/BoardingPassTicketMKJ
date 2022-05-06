@@ -11,6 +11,8 @@ public class Main {
     private static Ticket ticket1 = new Ticket("John Doe", 33, "abc@gmail.com","male","123-123-1234", "01/01/2022","IAD", "FRN", 1000);
     private static Ticket tempTicket = new Ticket();
 
+    private static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+
     public static void main(String[] args) throws ParseException {
 //        Date d1 = new Date();
 //        System.out.println("Current date is " + d1);
@@ -20,9 +22,12 @@ public class Main {
 //        Date d3 = new Date(2022,01, 01);
 //        System.out.println(d3);
 
-        String sDate1="31/12/1998";
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-        System.out.println(sDate1+"\t"+date1);
+//        String sDate1="31/12/1998";
+//        //Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+//        Date date1 = dateFormatter.parse(sDate1);
+//        System.out.println(sDate1+"\t"+date1);
+//        System.out.println(date1+1);
+
 
     menuEntry();
         
@@ -50,15 +55,15 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("You selected to Display Tickets Info...");
-//                    for (Ticket ticket: TicketArray) {
-//                        System.out.println("Index: " + TicketArray.indexOf(ticket));
-//                        System.out.println("Passanger Name: " + ticket.getPassengerName());
-//                        System.out.println("Age: " + ticket.getPassengerAge());
-//                        System.out.println("Phone No: " + waiter.getPhoneNo());
-//                        System.out.println("Employee ID: " + waiter.getEmployeeID());
-//                        System.out.println("Shift: " + waiter.getShift());
-//                        System.out.println();
-//                      }
+                    for (Ticket ticket: TicketArray) {
+                        System.out.println("Index: " + TicketArray.indexOf(ticket));
+                        System.out.println("Passanger Name: " + ticket.getPassengerName());
+                        System.out.println("Age: " + ticket.getPassengerAge());
+                        System.out.println("Email: " + ticket.getPassengerEmail());
+                        System.out.println("Gender: " + ticket.getPassengerGender());
+                        System.out.println("Phone No: " + ticket.getPassengerPhoneNo());
+                        System.out.println();
+                      }
 
                     break;
                 case 4:
@@ -89,14 +94,20 @@ public class Main {
 
         //add tempTicket
         tempTicket.addTicket();
-        TicketArray.add(tempTicket);
+
 
         System.out.println(TicketArray);
 
         tempTicket.calculatePrice();
         System.out.println("Ticket calculated price: " + tempTicket.getPrice());
-        System.out.println(TicketArray);
         //tempTicket.setPrice();
+
+        // Calc ETA
+        tempTicket.calculateETA();
+
+        //Finally add ticket to Ticket Array and print out the array:
+        TicketArray.add(tempTicket);
+        System.out.println(TicketArray);
 
         }
 

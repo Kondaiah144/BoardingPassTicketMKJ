@@ -1,3 +1,6 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Ticket {
@@ -180,7 +183,7 @@ public class Ticket {
         this.setPassengerGender(scanner.nextLine());
         System.out.print("Phone No: ");
         this.setPassengerPhoneNo(scanner.nextLine());
-        System.out.print("Departure Date: ");
+        System.out.print("Departure Date (DD/MM/YYYY): ");
         this.setDepartureDate(scanner.nextLine());
         System.out.print("Origin Airport: ");
         this.setOriginAirport(scanner.nextLine());
@@ -194,6 +197,32 @@ public class Ticket {
     }
 
     public void calculateETA() {
+        // https://beginnersbook.com/2017/10/java-add-days-to-date/
+        // Calculate days to add per flight Miles ....(MM)
+        double daysToAddDouble = this.flightMiles*.01;
+        int daysToAdd = (int) daysToAddDouble;
+
+        //Given Date in String format
+        String oldDate = this.getDepartureDate();
+        System.out.println("Date before Addition: "+oldDate);
+        //Specifying date format that matches the given date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        try{
+            //Setting the date to the given date
+            c.setTime(sdf.parse(oldDate));
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+
+        //Number of Days to add
+        c.add(Calendar.DAY_OF_MONTH, daysToAdd);
+        //Date after adding the days to the given date
+        String newDate = sdf.format(c.getTime());
+        //Displaying the new Date after addition of Days
+        System.out.println("Date after Addition: "+newDate);
+        // Set the ETA with added number of days.... (MM)
+        this.setETA(newDate);
 
     }
 
