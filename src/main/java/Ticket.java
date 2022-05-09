@@ -1,6 +1,7 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Ticket {
@@ -186,9 +187,9 @@ public class Ticket {
         System.out.print("Departure Date (DD/MM/YYYY): ");
         this.setDepartureDate(scanner.nextLine());
         System.out.print("Origin Airport - Three Digit Code: ");
-        this.setOriginAirport(scanner.nextLine());
+        this.setOriginAirport(scanner.nextLine().toUpperCase());
         System.out.print("Destination Airport - Three Digit Code: ");
-        this.setDestinationAirport(scanner.nextLine());
+        this.setDestinationAirport(scanner.nextLine().toUpperCase());
         System.out.print("Flight Miles: ");
         this.setFlightMiles(scanner.nextInt());
         scanner.nextLine();
@@ -223,7 +224,7 @@ public class Ticket {
         this.setETA(newDate);
     }
 
-    public void calculatePrice() {
+    public double calculatePrice() {
         this.price = this.flightMiles*.1;
         if (this.getPassengerAge() <= 12){
             this.setPrice((int) (this.getPrice()*.50));
@@ -232,6 +233,7 @@ public class Ticket {
         } else if (this.getPassengerAge() > 12 && this.getPassengerAge()<60 && this.getPassengerGender().equals("female")){
             this.setPrice((int) (this.getPrice()*.75));
         }
+        return this.price;
     }
 
     public void calculateBoardingPassNo() {
@@ -239,6 +241,7 @@ public class Ticket {
         // ACME + Origin Airport + Dest Airport + Date + Hours + seconds
         this.setBoardingPassNo("ACME-" + this.getOriginAirport() + "-" + this.getDestinationAirport() + "-" + System.currentTimeMillis());
         //System.out.println(this.getBoardingPassNo());
+        System.out.println("Boarding Pass Ticket No: " + this.getBoardingPassNo());
 
     }
 
