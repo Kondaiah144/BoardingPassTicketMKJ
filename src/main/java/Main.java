@@ -8,10 +8,11 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static List<Ticket> TicketArray = new ArrayList<Ticket>();
+    // Example ticket "ticket1":
     private static Ticket ticket1 = new Ticket("John Doe", 33, "abc@gmail.com","male","123-123-1234", "01/01/2022","IAD", "FRN", 1000);
+    // tempTicket will be used when getting entry from user, to add to TicketArray (Array List of "Ticket" objects:
     private static Ticket tempTicket = new Ticket();
-
-    private static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+    // private static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
     public static void main(String[] args) throws ParseException {
 //        Date d1 = new Date();
@@ -37,7 +38,7 @@ public class Main {
         System.out.println("""
                 \n======================================================================
                 Welcome to ACME Airways. You are going on a trip.  This application
-                will assits you in getting you a boarding pass / ticket.  Please read 
+                will assits you in getting you a boarding pass / ticket.  Please read
                 the prompts carefully to get you through this process as quickly a possible.
                 ========================================================================
                 """);
@@ -62,6 +63,14 @@ public class Main {
                         System.out.println("Email: " + ticket.getPassengerEmail());
                         System.out.println("Gender: " + ticket.getPassengerGender());
                         System.out.println("Phone No: " + ticket.getPassengerPhoneNo());
+                        System.out.println("Departure Date: " + ticket.getDepartureDate());
+                        System.out.println("Origin Airport: " + ticket.getOriginAirport());
+                        System.out.println("Destination Airport: " + ticket.getDestinationAirport());
+                        System.out.println("Flight Miles: " + ticket.getFlightMiles());
+                        System.out.println("ETA: " + ticket.getETA());
+                        System.out.println("Price: " + ticket.getPrice());
+                        System.out.println("Boarding Pass No: " + ticket.getBoardingPassNo());
+
                         System.out.println();
                       }
 
@@ -76,7 +85,7 @@ public class Main {
     }
 
         public static int pickMenuEntry() {
-            System.out.println("""
+            System.out.print("""
                 =======================
                 1- Book a Flight / Create a Ticket
                 2- Delete Existing Ticket
@@ -94,19 +103,22 @@ public class Main {
 
         //add tempTicket
         tempTicket.addTicket();
-
-
-        System.out.println(TicketArray);
-
         tempTicket.calculatePrice();
+        System.out.println();  // Empty line
         System.out.println("Ticket calculated price: " + tempTicket.getPrice());
         //tempTicket.setPrice();
 
-        // Calc ETA
+        // Calc ETA:
         tempTicket.calculateETA();
+        //System.out.println("Ticket calculated ETA: " + tempTicket.getETA());
+
+        // Calculate Boarding Pass No:
+        tempTicket.calculateBoardingPassNo();
+        System.out.println("Boarding Pass Ticket No: " + tempTicket.getBoardingPassNo());
 
         //Finally add ticket to Ticket Array and print out the array:
         TicketArray.add(tempTicket);
+        System.out.println("//// TicketArray as below ////");  // To be removed
         System.out.println(TicketArray);
 
         }

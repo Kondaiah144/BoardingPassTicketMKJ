@@ -14,10 +14,10 @@ public class Ticket {
     String originAirport;
     String destinationAirport;
     int flightMiles;
-    ///
+    /// Following will be calculated:
     String ETA;
     double price;
-    int boardingPassNo;
+    String boardingPassNo;
 
 
     //Constructors
@@ -37,7 +37,7 @@ public class Ticket {
         this.flightMiles = flightMiles;
     }
 
-    public Ticket(String passengerName, int passengerAge, String passengerEmail, String passengerGender, String passengerPhoneNo, String departureDate, String originAirport, String destinationAirport, int flightMiles, String ETA, double price, int boardingPassNo) {
+    public Ticket(String passengerName, int passengerAge, String passengerEmail, String passengerGender, String passengerPhoneNo, String departureDate, String originAirport, String destinationAirport, int flightMiles, String ETA, double price, String boardingPassNo) {
         this.passengerName = passengerName;
         this.passengerAge = passengerAge;
         this.passengerEmail = passengerEmail;
@@ -142,11 +142,11 @@ public class Ticket {
         this.price = price;
     }
 
-    public int getBoardingPassNo() {
+    public String getBoardingPassNo() {
         return boardingPassNo;
     }
 
-    public void setBoardingPassNo(int boardingPassNo) {
+    public void setBoardingPassNo(String boardingPassNo) {
         this.boardingPassNo = boardingPassNo;
     }
 
@@ -154,18 +154,18 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "passengerName='" + passengerName + '\'' +
-                ", passengerAge=" + passengerAge +
-                ", passengerEmail='" + passengerEmail + '\'' +
-                ", passengerGender='" + passengerGender + '\'' +
-                ", passengerPhoneNo='" + passengerPhoneNo + '\'' +
-                ", departureDate='" + departureDate + '\'' +
-                ", originAirport='" + originAirport + '\'' +
-                ", destinationAirport='" + destinationAirport + '\'' +
-                ", flightMiles=" + flightMiles +
-                ", ETA='" + ETA + '\'' +
-                ", price=" + price +
-                ", boardingPassNo=" + boardingPassNo +
+                "passengerName='" + passengerName + '\'' + "\n"+
+                ", passengerAge=" + passengerAge + "\n"+
+                ", passengerEmail='" + passengerEmail + '\'' + "\n"+
+                ", passengerGender='" + passengerGender + '\'' + "\n"+
+                ", passengerPhoneNo='" + passengerPhoneNo + '\'' + "\n"+
+                ", departureDate='" + departureDate + '\'' + "\n"+
+                ", originAirport='" + originAirport + '\'' + "\n"+
+                ", destinationAirport='" + destinationAirport + '\'' + "\n"+
+                ", flightMiles=" + flightMiles + "\n"+
+                ", ETA='" + ETA + '\'' + "\n"+
+                ", price=" + price + "\n"+
+                ", boardingPassNo=" + boardingPassNo + "\n"+
                 '}';
     }
 
@@ -174,38 +174,37 @@ public class Ticket {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Passenger Name & Lastname: ");
         this.setPassengerName(scanner.nextLine());
-        System.out.print("Passanger Age: ");
+        System.out.print("Passenger Age: ");
         this.setPassengerAge(scanner.nextInt());
         scanner.nextLine();
-        System.out.print("Passanger Email: ");
+        System.out.print("Passenger Email: ");
         this.setPassengerEmail(scanner.nextLine());
-        System.out.print("Passenger Gender (male/female): ");
+        System.out.print("Gender (male/female): ");
         this.setPassengerGender(scanner.nextLine());
         System.out.print("Phone No: ");
         this.setPassengerPhoneNo(scanner.nextLine());
         System.out.print("Departure Date (DD/MM/YYYY): ");
         this.setDepartureDate(scanner.nextLine());
-        System.out.print("Origin Airport: ");
+        System.out.print("Origin Airport - Three Digit Code: ");
         this.setOriginAirport(scanner.nextLine());
-        System.out.print("Destination Airport: ");
-        this.setOriginAirport(scanner.nextLine());
+        System.out.print("Destination Airport - Three Digit Code: ");
+        this.setDestinationAirport(scanner.nextLine());
         System.out.print("Flight Miles: ");
         this.setFlightMiles(scanner.nextInt());
         scanner.nextLine();
-
         //this.shift = scanner.nextLine();
     }
 
     public void calculateETA() {
         // https://beginnersbook.com/2017/10/java-add-days-to-date/
         // Calculate days to add per flight Miles ....(MM)
-        double daysToAddDouble = this.flightMiles*.01;
+        double daysToAddDouble = this.flightMiles*.001;
         int daysToAdd = (int) daysToAddDouble;
 
         //Given Date in String format
         String oldDate = this.getDepartureDate();
-        System.out.println("Date before Addition: "+oldDate);
-        //Specifying date format that matches the given date
+        System.out.println("Original Departure Date (before addition): "+oldDate);
+        //Specifying date format that matches the given date:
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
         try{
@@ -214,16 +213,14 @@ public class Ticket {
         }catch(ParseException e){
             e.printStackTrace();
         }
-
         //Number of Days to add
         c.add(Calendar.DAY_OF_MONTH, daysToAdd);
         //Date after adding the days to the given date
         String newDate = sdf.format(c.getTime());
         //Displaying the new Date after addition of Days
-        System.out.println("Date after Addition: "+newDate);
+        System.out.println("New ETA Date after Addition of Days (1 day per 1000 miles): "+newDate);
         // Set the ETA with added number of days.... (MM)
         this.setETA(newDate);
-
     }
 
     public void calculatePrice() {
@@ -235,11 +232,13 @@ public class Ticket {
         } else if (this.getPassengerAge() > 12 && this.getPassengerAge()<60 && this.getPassengerGender().equals("female")){
             this.setPrice((int) (this.getPrice()*.75));
         }
-
-
     }
 
     public void calculateBoardingPassNo() {
+        // orig airport & Dest Airport &  ???
+        // ACME + Origin Airport + Dest Airport + Date + Hours + seconds
+        this.setBoardingPassNo("ACME-" + this.getOriginAirport() + "-" + this.getDestinationAirport() + "-" + System.currentTimeMillis());
+        //System.out.println(this.getBoardingPassNo());
 
     }
 
