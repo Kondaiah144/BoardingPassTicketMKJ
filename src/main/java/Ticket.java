@@ -165,7 +165,7 @@ public class Ticket {
                 ", destinationAirport='" + destinationAirport + '\'' + "\n"+
                 ", flightMiles=" + flightMiles + "\n"+
                 ", ETA='" + ETA + '\'' + "\n"+
-                ", price=" + price + "\n"+
+                ", price($)=" + price + "\n"+
                 ", boardingPassNo=" + boardingPassNo + "\n"+
                 '}';
     }
@@ -233,14 +233,15 @@ public class Ticket {
         } else if (this.getPassengerAge() > 12 && this.getPassengerAge()<60 && this.getPassengerGender().equals("female")){
             this.setPrice((int) (this.getPrice()*.75));
         }
-        return this.price;
+        System.out.println();  // Empty line
+        System.out.println("Ticket price ($1 per 10 miles is list price): " + this.getPrice());
+        // Return the calculated price:
+        return this.price;  //for Test purposes here
     }
 
     public void calculateBoardingPassNo() {
-        // orig airport & Dest Airport &  ???
-        // ACME + Origin Airport + Dest Airport + Date + Hours + seconds
+        // ACME + Origin Airport + Dest Airport + currentTimeMillis() method returns the current time in milliseconds since 1/1/1970
         this.setBoardingPassNo("ACME-" + this.getOriginAirport() + "-" + this.getDestinationAirport() + "-" + System.currentTimeMillis());
-        //System.out.println(this.getBoardingPassNo());
         System.out.println("Boarding Pass Ticket No: " + this.getBoardingPassNo());
 
     }

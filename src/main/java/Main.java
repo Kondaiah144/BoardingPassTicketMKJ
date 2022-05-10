@@ -14,8 +14,8 @@ public class Main {
     private static List<Ticket> TicketArray = new ArrayList<Ticket>();
     // Example ticket "ticket1":
     private static Ticket ticket1 = new Ticket("John Doe", 33, "abc@gmail.com", "male", "123-123-1234", "01/01/2022", "IAD", "FRN", 1000);
-    // tempTicket will be used when getting entry from user, to add to TicketArray (Array List of "Ticket" objects:
-    private static Ticket tempTicket = new Ticket();
+
+    //private static Ticket tempTicket = new Ticket();
     // private static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static Path filePath = Paths.get("C:\\java-Training\\java-projects\\BoardingPassTicketMKJ\\BoardingPassTicketMKJ\\src\\main\\resources\\ticket.txt");
 
@@ -95,32 +95,27 @@ public class Main {
     }
 
     public static void createTicket() {
-        //add test ticket1
-//        TicketArray.add(ticket1);
-//        System.out.println(ticket1);
+        // tempTicket will be used when getting entry from user, to add to TicketArray (Array List of "Ticket" objects:
+        Ticket tempTicket = new Ticket();
 
-        //add tempTicket
+        //add tempTicket with user inputs:
         tempTicket.addTicket();
+
+        // Calculate price:
         tempTicket.calculatePrice();
-        System.out.println();  // Empty line
-        System.out.println("Ticket price ($1 per 10 miles is list price): " + tempTicket.getPrice());
-        //tempTicket.setPrice();
 
         // Calc ETA:
         tempTicket.calculateETA();
-        //System.out.println("Ticket calculated ETA: " + tempTicket.getETA());
 
         // Calculate Boarding Pass No:
         tempTicket.calculateBoardingPassNo();
-        //System.out.println("Boarding Pass Ticket No: " + tempTicket.getBoardingPassNo());
 
         //Finally add ticket to Ticket Array and print out the array:
         TicketArray.add(tempTicket);
-        System.out.println("//// TicketArray as below ////");  // To be removed
+        System.out.println("\n//// TicketArray as below ////");  // To be removed
         System.out.println(TicketArray);
 
-
-        //---Create file
+        //---Create file--//
         // if (createdFilePath != null) {
         if (Files.exists(filePath)) {
             System.out.println("\nFile already exists.");
@@ -129,15 +124,14 @@ public class Main {
             createAFile();
         }
 
-        //---Update the file with the new Ticket info
+        //---Update the file with the new Ticket info--//
         System.out.println("\nCalling the update a file method...");
         //writeToAFile(firstName,lastName,age,userID,password);
         writeToAFile(tempTicket);
 
+    } // closing bracket for createTicket()
 
-    }
-
-    //Creating file
+    //--Creating file Method--//
     public static void createAFile() {
         try {
             Files.createFile(filePath);
@@ -148,10 +142,10 @@ public class Main {
 
     }
 
-    //Write to a file
+    //--Write to a file Method--//
     public static void writeToAFile(Ticket tempTicket)  {
         try {
-            Files.writeString(filePath, "Index: " + TicketArray.indexOf(tempTicket) + "," + "\n");
+            Files.writeString(filePath, "Index: " + TicketArray.indexOf(tempTicket) + "," + "\n", StandardOpenOption.APPEND);
             Files.writeString(filePath, "Passenger Name: " + tempTicket.getPassengerName() + "," + "\n", StandardOpenOption.APPEND);
             Files.writeString(filePath, "Age: " + tempTicket.getPassengerAge() + "," + "\n", StandardOpenOption.APPEND);
             Files.writeString(filePath, "Email: " +tempTicket.getPassengerEmail() + "," + "\n", StandardOpenOption.APPEND);
@@ -164,6 +158,7 @@ public class Main {
             Files.writeString(filePath, "ETA: " +tempTicket.getETA() + "," + "\n", StandardOpenOption.APPEND);
             Files.writeString(filePath, "Price($): " +String.valueOf(tempTicket.getPrice()) + "," + "\n", StandardOpenOption.APPEND);
             Files.writeString(filePath, "Boarding Pass No: " +tempTicket.getBoardingPassNo() + "," + "\n", StandardOpenOption.APPEND);
+            Files.writeString(filePath,"-------", StandardOpenOption.APPEND);
 
         } catch (Exception e) {
             e.printStackTrace();
